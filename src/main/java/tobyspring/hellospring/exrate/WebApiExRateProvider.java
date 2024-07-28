@@ -16,6 +16,6 @@ public class WebApiExRateProvider implements ExRateProvider {
     public BigDecimal getExRate(String currency) {
         String url = "https://open.er-api.com/v6/latest/" + currency;
 
-        return apiTemplate.getForExRate(url);
+        return apiTemplate.getForExRate(url, new HttpClinetApiExercutor(), new ErApiExtractor());
     }
 }

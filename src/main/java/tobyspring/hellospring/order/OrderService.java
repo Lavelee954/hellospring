@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
-import tobyspring.hellospring.data.OrderRepository;
+
 
 @Service
 public class OrderService {
@@ -20,13 +20,9 @@ public class OrderService {
   public Order createOrder(String no, BigDecimal total) {
     Order order = new Order(no, total);
 
-    new TransactionTemplate(transactionManager).execute(status -> {
+    return new TransactionTemplate(transactionManager).execute(status -> {
       this.orderRepository.save(order);
       return order;
     });
-    
-    this.orderRepository.save(order);
-
-    return null;
   }
 }

@@ -4,43 +4,43 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "orders")
 public class Order {
-    @Id @GeneratedValue
-    private Long id;
 
-    @Column
-    private String no;
+  @Id
+  @GeneratedValue
+  private Long id;
 
-    private BigDecimal total;
+  @Column
+  private String no;
 
-    public Order() {
-    }
+  private BigDecimal total;
 
-    public Order(String no, BigDecimal total) {
-        this.no = no;
-        this.total = total;
-    }
+  public Order() {
+  }
 
-    public Long getId() {
-        return id;
-    }
+  public Order(String no, BigDecimal total) {
+    this.no = no;
+    this.total = total;
+  }
 
-    public String getNo() {
-        return no;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public BigDecimal getTotal() {
-        return total;
-    }
+  public String getNo() {
+    return no;
+  }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", no='" + no + '\'' +
-                ", total=" + total +
-                '}';
-    }
+  public BigDecimal getTotal() {
+    return total;
+  }
+
+  @Override
+  public String toString() {
+    return "Order{" +
+        "id=" + id +
+        ", no='" + no + '\'' +
+        ", total=" + total +
+        '}';
+  }
 }

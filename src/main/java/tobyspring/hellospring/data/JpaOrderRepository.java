@@ -5,12 +5,14 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceContext;
 import tobyspring.hellospring.order.Order;
+import tobyspring.hellospring.order.OrderRepository;
 
-public class OrderRepository {
+public class JpaOrderRepository implements OrderRepository {
 
   @PersistenceContext
   private EntityManager entityManager;
 
+  @Override
   public void save(Order order) {
     entityManager.persist(order);
   }

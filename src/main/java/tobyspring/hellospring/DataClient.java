@@ -1,18 +1,14 @@
 package tobyspring.hellospring;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
-import tobyspring.hellospring.data.OrderRepository;
 import tobyspring.hellospring.order.Order;
 
 import java.math.BigDecimal;
-import tobyspring.hellospring.order.OrderConfig;
+import tobyspring.hellospring.order.OrderRepository;
 
 public class DataClient {
 

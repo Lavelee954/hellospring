@@ -3,42 +3,43 @@ package tobyspring.hellospring.order;
 import java.math.BigDecimal;
 
 public class Order {
-    private Long id;
 
-    private String no;
+  private Long id;
 
-    private BigDecimal total;
+  private String no;
 
-    public Order() {
-    }
+  private BigDecimal total;
 
-    public Order(String no, BigDecimal total) {
-        this.no = no;
-        this.total = total;
-    }
+  public Order() {
+  }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+  public Order(String no, BigDecimal total) {
+    this.no = no;
+    this.total = total;
+  }
 
-    public Long getId() {
-        return id;
-    }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    public String getNo() {
-        return no;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public BigDecimal getTotal() {
-        return total;
-    }
+  public String getNo() {
+    return no;
+  }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", no='" + no + '\'' +
-                ", total=" + total +
-                '}';
-    }
+  public BigDecimal getTotal() {
+    return total;
+  }
+
+  @Override
+  public String toString() {
+    return "Order{" +
+        "id=" + id +
+        ", no='" + no + '\'' +
+        ", total=" + total +
+        '}';
+  }
 }

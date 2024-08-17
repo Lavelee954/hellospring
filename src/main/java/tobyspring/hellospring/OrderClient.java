@@ -12,8 +12,7 @@ public class OrderClient {
     BeanFactory beanFactory = new AnnotationConfigApplicationContext(OrderConfig.class);
     OrderService service = beanFactory.getBean(OrderService.class);
 
-    Order order = service.createOrder("0100", BigDecimal.TEN);
+    Order order = service.createOrder("O100", BigDecimal.TEN);
     System.out.println(order);
-
   }
 }

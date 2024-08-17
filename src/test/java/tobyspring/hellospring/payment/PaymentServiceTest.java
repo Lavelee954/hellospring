@@ -1,52 +1,52 @@
 package tobyspring.hellospring.payment;
 
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static java.math.BigDecimal.valueOf;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-
-import static java.math.BigDecimal.valueOf;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class PaymentServiceTest {
-    Clock clock;
 
-    @BeforeEach
-    void beforeEach() {
-        this.clock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
-    }
+  Clock clock;
 
-    @Test
-    void convertedAmount() {
-        testAmount(valueOf(500), valueOf(5_000), this.clock);
-        testAmount(valueOf(1_000), valueOf(10_000), this.clock);
-        testAmount(valueOf(3_000), valueOf(30_000), this.clock);
-    }
+  @BeforeEach
+  void beforeEach() {
+    this.clock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
+  }
 
-    @Test
-    void validUntil() {
-        PaymentService paymentService = new PaymentService(new ExRateProviderStub(valueOf(1_000)), clock);
+  @Test
+  void convertedAmount() {
+    testAmount(valueOf(500), valueOf(5_000), this.clock);
+    testAmount(valueOf(1_000), valueOf(10_000), this.clock);
+    testAmount(valueOf(3_000), valueOf(30_000), this.clock);
+  }
 
-        Payment payment = paymentService.prepare(1L, "USD", BigDecimal.TEN);
+  @Test
+  void validUntil() {
+    PaymentService paymentService = new PaymentService(new ExRateProviderStub(valueOf(1_000)), clock);
 
-        // valid until이 prepare() 30분 뒤로 설정됐는가?
-        LocalDateTime now = LocalDateTime.now(this.clock);
-        LocalDateTime expectedValidUntil = now.plusMinutes(30);
+    Payment payment = paymentService.prepare(1L, "USD", BigDecimal.TEN);
 
-        Assertions.assertThat(payment.getValidUntil()).isEqualTo(expectedValidUntil);
-    }
+    // valid until이 prepare() 30분 뒤로 설정됐는가?
+    LocalDateTime now = LocalDateTime.now(this.clock);
+    LocalDateTime expectedValidUntil = now.plusMinutes(30);
 
-    private static void testAmount(BigDecimal exRate, BigDecimal convertedAmount, Clock clock) {
-        PaymentService paymentService = new PaymentService(new ExRateProviderStub(exRate), clock);
+    Assertions.assertThat(payment.getValidUntil()).isEqualTo(expectedValidUntil);
+  }
 
-        Payment payment = paymentService.prepare(1L, "USD", BigDecimal.TEN);
+  private static void testAmount(BigDecimal exRate, BigDecimal convertedAmount, Clock clock) {
+    PaymentService paymentService = new PaymentService(new ExRateProviderStub(exRate), clock);
 
-        assertThat(payment.getExRate()).isEqualByComparingTo(exRate);
-        assertThat(payment.getConvertedAmount()).isEqualByComparingTo(convertedAmount);
-    }
+    Payment payment = paymentService.prepare(1L, "USD", BigDecimal.TEN);
+
+    assertThat(payment.getExRate()).isEqualByComparingTo(exRate);
+    assertThat(payment.getConvertedAmount()).isEqualByComparingTo(convertedAmount);
+  }
 }

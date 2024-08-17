@@ -2,28 +2,24 @@ package tobyspring.hellospring;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import tobyspring.hellospring.data.OrderRepository;
 import tobyspring.hellospring.order.Order;
 
 import java.math.BigDecimal;
 
 public class DataClient {
-    public static void main(String[] args) {
-        BeanFactory beanFactory = new AnnotationConfigApplicationContext(DataConfig.class);
-        EntityManagerFactory emf = beanFactory.getBean(EntityManagerFactory.class);
 
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
+  public static void main(String[] args) {
+    BeanFactory beanFactory = new AnnotationConfigApplicationContext(DataConfig.class);
+    OrderRepository repository = beanFactory.getBean(OrderRepository.class);
 
-        Order order = new Order("100", BigDecimal.TEN);
+    Order order = new Order("100", BigDecimal.TEN);
+    repository.save(order);
 
-        em.persist(order);
-
-        System.out.println(order);
-
-        em.getTransaction().commit();
-        em.close();
-
-    }
+    System.out.println(order);
+    
+  }
 }

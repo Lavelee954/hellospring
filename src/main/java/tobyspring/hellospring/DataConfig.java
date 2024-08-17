@@ -1,5 +1,6 @@
 package tobyspring.hellospring;
 
+import jakarta.persistence.EntityManagerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
@@ -9,26 +10,33 @@ import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import javax.sql.DataSource;
+import tobyspring.hellospring.data.OrderRepository;
 
 @Configuration
 public class DataConfig {
-    @Bean
-    public DataSource dataSource() {
-        return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).build();
-    }
 
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
+  @Bean
+  public DataSource dataSource() {
+    return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).build();
+  }
 
-        emf.setDataSource(dataSource());
-        emf.setPackagesToScan("tobyspring.hellospring");
-        emf.setJpaVendorAdapter(new HibernateJpaVendorAdapter() {{
-            setDatabase(Database.H2);
-            setGenerateDdl(true);
-            setShowSql(true);
-        }});
+  @Bean
+  public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+    LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
 
-        return emf;
-    }
+    emf.setDataSource(dataSource());
+    emf.setPackagesToScan("tobyspring.hellospring");
+    emf.setJpaVendorAdapter(new HibernateJpaVendorAdapter() {{
+      setDatabase(Database.H2);
+      setGenerateDdl(true);
+      setShowSql(true);
+    }});
+
+    return emf;
+  }
+
+  @Bean
+  public OrderRepository OrderRepository(EntityManagerFactory emf) {
+    return new OrderRepository(emf);
+  }
 }
